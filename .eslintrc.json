@@ -1,3 +1,12 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": [ "next/core-web-vitals","next", "prettier"],
+  "plugins": ["prettier"],
+  "rules": {
+     "react/no-unescaped-entities": "off",
+    "@next/next/no-page-custom-font": "off"
+    // "no-console": "warn",
+    // "prettier/prettier": ["warn","error",{
+    //   "endOfLine": "auto"}
+    // ]
+  }
 }

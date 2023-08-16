@@ -1,5 +1,10 @@
 "use client";
-import { Typography } from "@mui/material";
+
+import Common from "@/component/common";
 export default function Home() {
-  return <main>text</main>;
+  return (
+    <main>
+      <Common />
+    </main>
+  );
 }
