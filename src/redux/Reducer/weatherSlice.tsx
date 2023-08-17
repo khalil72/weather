@@ -3,25 +3,26 @@ import axios from "axios";
 const API_KEY = process.env.REACT_APP_OPENWEATHERMAP_API_KEY;
 
 interface WeatherState {
-  data: any;
+  weatherData: any;
   loading: boolean;
-  error: string | null;
+  error: any;
 }
 export const fetchWeather = createAsyncThunk(
   "weather/fetchWeather",
   async () => {
     try {
+      const apiKey = process.env.REACT_APP_OPENWEATHERMAP_API_KEY;
       const response = await axios.get(
-        `http://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=${API_KEY}`
+        `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=pakistan&aqi=yes`
       );
       return response.data;
     } catch (error) {
-      return error;
+      throw error;
     }
   }
 );
 const initialState: WeatherState = {
-  data: null,
+  weatherData: null,
   loading: false,
   error: null,
 };
@@ -35,13 +36,13 @@ const weatherSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchWeather.fulfilled, (state, action: PayloadAction<any>) => {
+      .addCase(fetchWeather.fulfilled, (state, action) => {
         state.loading = false;
-        state.data = action.payload;
+        state.weatherData = action.payload;
       })
-      .addCase(fetchWeather.rejected, (state, action: PayloadAction<any>) => {
+      .addCase(fetchWeather.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload.message;
+        state.error = action.error.message;
       });
   },
 });
