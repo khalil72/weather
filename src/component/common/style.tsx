@@ -1,7 +1,10 @@
 // import bgImage from "@/app/Assets/images/background.jpg";
 
 export const useStyles = {
-  banner: {
-     
+  loader: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100vh",
   },
 };
