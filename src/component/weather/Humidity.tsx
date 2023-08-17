@@ -8,12 +8,13 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { FC } from "react";
 import { map } from "lodash";
 import WbSunnyIcon from "@mui/icons-material/WbSunny";
 import AirOutlinedIcon from "@mui/icons-material/AirOutlined";
 import ThunderstormOutlinedIcon from "@mui/icons-material/ThunderstormOutlined";
 import StormOutlinedIcon from "@mui/icons-material/StormOutlined";
+import { HumidityProps } from "@/component/common/type";
 
 interface WeatherData {
   id: number;
@@ -21,30 +22,35 @@ interface WeatherData {
   value: string;
   icons: JSX.Element;
 }
-const Humidity = () => {
+const Humidity: FC<HumidityProps> = ({
+  humidity,
+  airPressure,
+  chanceOfRain,
+  windSpeed,
+}) => {
   const data: WeatherData[] = [
     {
       id: 1,
       label: "Humidity",
-      value: "50%",
+      value: `${humidity}%`,
       icons: <WbSunnyIcon />,
     },
     {
       id: 2,
       label: "Air Pressure",
-      value: "1016",
+      value: `${airPressure} mb`,
       icons: <StormOutlinedIcon />,
     },
     {
       id: 3,
       label: "Chance of Rain",
-      value: "50%",
+      value: `${chanceOfRain} mm`,
       icons: <ThunderstormOutlinedIcon />,
     },
     {
       id: 4,
       label: "Wind Speed",
-      value: "7.72",
+      value: `${windSpeed} km/h`,
       icons: <AirOutlinedIcon />,
     },
   ];

@@ -1,14 +1,35 @@
-import { Box, Typography } from "@mui/material";
-import React from "react";
+import { Box, Stack, Typography } from "@mui/material";
+import React, { FC } from "react";
 import CloudQueueOutlinedIcon from "@mui/icons-material/CloudQueueOutlined";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
+import { temperature } from "@/component/common/type";
+import Image from "next/image";
 
-const Temperature = () => {
+const Temperature: FC<temperature> = ({
+  location,
+  condition,
+  icon,
+  temperatureC,
+}) => {
+  const iconUrl = icon && `https:${icon}`;
+
   return (
-    <Box sx={{ mt: 2, px: 4 }}>
-      <CloudQueueOutlinedIcon fontSize={"large"} />
+    <Stack direction={"column"} spacing={0} mt={2} px={4} textAlign={"start"}>
+      <Box height={"66px"}>
+        {icon ? (
+          <Image
+            src={iconUrl}
+            width={100}
+            height={100}
+            style={{ marginBottom: 0 }}
+          />
+        ) : (
+          <CloudQueueOutlinedIcon fontSize={"small"} />
+        )}
+      </Box>
+
       <Typography variant={"h6"} fontWeight={600} fontFamily={"roboto"} pb={0}>
-        FOG
+        {condition}
       </Typography>
       <Typography
         fontFamily={"roboto"}
@@ -18,12 +39,12 @@ const Temperature = () => {
         pb={2}
       >
         <LocationOnOutlinedIcon fontSize={"12px"} />
-        <span> Chakwal</span>
+        <span> {location}</span>
       </Typography>
       <Typography variant={"h3"} fontWeight={600} fontFamily={"roboto"}>
-        27 <span>°C</span>
+        {temperatureC} <span>°C</span>
       </Typography>
-    </Box>
+    </Stack>
   );
 };
 

@@ -14,9 +14,9 @@ const Common = () => {
   const { weatherData, loading, error } = useAppSelector(
     (state) => state.weather
   );
-  console.log(" weatherData", weatherData);
-  console.log("loading", loading);
-  console.log("error", error);
+  // console.log(" weatherData", weatherData);
+  // console.log("loading", loading);
+  // console.log("error", error);
 
   useEffect(() => {
     dispatch(fetchWeather());
@@ -24,18 +24,27 @@ const Common = () => {
   return (
     <BackgroundContainer>
       <Container maxWidth="lg">
+        <Search />
         <Stack
           direction={"row"}
           justifyContent={"space-between"}
           alignItems={"center"}
           p={4}
         >
-          <Temperature />
-          <Humidity />
+          <Temperature
+            location={weatherData?.location.name}
+            condition={weatherData?.current.condition.text}
+            icon={weatherData.current.condition.icon}
+            temperatureC={weatherData.current.temp_c}
+          />
+          <Humidity
+            humidity={weatherData.current.humidity}
+            airPressure={weatherData.current.pressure_mb}
+            chanceOfRain={weatherData.current.precip_mm}
+            windSpeed={weatherData.current.wind_kph}
+          />
         </Stack>
-        <h2>Current Weather in {weatherData?.location.name}</h2>
-
-        <Search />
+        {/* <h2>Current Weather in {weatherData?.location.name}</h2> */}
 
         {/* <History /> */}
       </Container>

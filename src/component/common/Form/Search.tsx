@@ -5,26 +5,21 @@ import InputAdornment from "@mui/material/InputAdornment";
 import SearchIcon from "@mui/icons-material/Search";
 import { useStyles } from "@/component/common/Form/style";
 import { toast } from "react-toastify";
+import { useAppDispatch } from "@/redux/hooks";
+import { fetchWeather } from "@/redux/Reducer/weatherSlice";
 
 const Search = () => {
   const classes = useStyles;
   const [SearchQuery, setQuery] = useState<string>("");
-  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+  const dispatch = useAppDispatch();
+  const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("SearchQuery:", SearchQuery);
-    const dummyData = [
-      { id: 1, name: "New York", weather: "Cloudy" },
-      { id: 2, name: "Los Angeles", weather: "Sunny" },
-      { id: 3, name: "Chicago", weather: "Rainy" },
-    ];
-    const filteredData = dummyData.filter((item) =>
-      item.name.toLowerCase().includes(SearchQuery.toLowerCase())
-    );
 
-    if (filteredData.length > 0) {
-      console.log("Search results:", filteredData);
-    } else {
-      toast.error("No matching results found");
+    try {
+      await dispatch(fetchWeather(SearchQuery));
+    } catch (error) {
+      toast.error("Error fetching weather data");
     }
   };
   return (
@@ -33,6 +28,7 @@ const Search = () => {
       alignItems="center"
       justifyContent="center"
       spacing={0}
+      pt={10}
     >
       <form onSubmit={handleSearch}>
         <TextField
