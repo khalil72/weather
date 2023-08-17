@@ -28,7 +28,7 @@ const Common = () => {
 
         <Search />
 
-        <History />
+        {/* <History /> */}
       </Container>
     </BackgroundContainer>
   );
