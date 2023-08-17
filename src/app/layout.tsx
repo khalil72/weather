@@ -8,6 +8,9 @@ import store from "@/redux/store";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import Loader from "@/component/common/loader";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 export default function RootLayout({
   children,
 }: {
@@ -22,6 +25,7 @@ export default function RootLayout({
             <ThemeProvider theme={theme}>
               <CssBaseline />
               {children}
+              <ToastContainer />
             </ThemeProvider>
           </PersistGate>
         </Provider>
