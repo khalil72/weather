@@ -6,9 +6,13 @@ import Temperature from "@/component/weather/Temperature";
 import Humidity from "@/component/weather/Humidity";
 import Search from "@/component/common/Form/Search";
 import History from "@/component/weather/History";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 
 const Common = () => {
-  const classes = useStyles;
+  const dispatch = useAppDispatch();
+  const weather = useAppSelector((state: any) => state.weather);
+  console.log("weatherData==>", weather);
+
   return (
     <BackgroundContainer>
       <Container maxWidth="lg">

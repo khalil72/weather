@@ -12,17 +12,3 @@ a {
     color: inherit;
     text-decoration: none;
 }
-
-.white-outline .MuiOutlinedInput-notchedOutline {
-    border-color: white !important;
-}
-
-.white-text {
-    color: white;
-}
-
-
-/* a:hover {
-    background-color: #DAA520 !important;
-    color: white !important;
-} */
