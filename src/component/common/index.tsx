@@ -8,45 +8,47 @@ import Search from "@/component/common/Form/Search";
 import History from "@/component/weather/History";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { fetchWeather } from "@/redux/Reducer/weatherSlice";
+import { toast } from "react-toastify";
 
 const Common = () => {
-  const dispatch = useAppDispatch();
   const { weatherData, loading, error } = useAppSelector(
     (state) => state.weather
   );
-  // console.log(" weatherData", weatherData);
-  // console.log("loading", loading);
-  // console.log("error", error);
 
   useEffect(() => {
-    dispatch(fetchWeather());
-  }, [dispatch]);
+    if (error) {
+      toast.error(error?.message);
+    }
+  }, [error]);
   return (
     <BackgroundContainer>
       <Container maxWidth="lg">
         <Search />
-        <Stack
-          direction={"row"}
-          justifyContent={"space-between"}
-          alignItems={"center"}
-          p={4}
-        >
-          <Temperature
-            location={weatherData?.location.name}
-            condition={weatherData?.current.condition.text}
-            icon={weatherData.current.condition.icon}
-            temperatureC={weatherData.current.temp_c}
-          />
-          <Humidity
-            humidity={weatherData.current.humidity}
-            airPressure={weatherData.current.pressure_mb}
-            chanceOfRain={weatherData.current.precip_mm}
-            windSpeed={weatherData.current.wind_kph}
-          />
-        </Stack>
-        {/* <h2>Current Weather in {weatherData?.location.name}</h2> */}
-
-        {/* <History /> */}
+        {loading ? (
+          <Typography>Loading</Typography>
+        ) : (
+          weatherData && (
+            <Stack
+              direction={"row"}
+              justifyContent={"space-between"}
+              alignItems={"center"}
+              p={4}
+            >
+              <Temperature
+                location={weatherData?.location.name}
+                condition={weatherData?.current.condition.text}
+                icon={weatherData.current.condition.icon}
+                temperatureC={weatherData.current.temp_c}
+              />
+              <Humidity
+                humidity={weatherData.current.humidity}
+                airPressure={weatherData.current.pressure_mb}
+                chanceOfRain={weatherData.current.precip_mm}
+                windSpeed={weatherData.current.wind_kph}
+              />
+            </Stack>
+          )
+        )}
       </Container>
     </BackgroundContainer>
   );

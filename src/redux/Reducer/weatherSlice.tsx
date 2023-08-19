@@ -1,23 +1,23 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { WeatherData } from "@/types";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-const API_KEY = process.env.REACT_APP_OPENWEATHERMAP_API_KEY;
 
 interface WeatherState {
-  weatherData: any;
+  weatherData: WeatherData | null;
   loading: boolean;
   error: any;
 }
 export const fetchWeather = createAsyncThunk(
   "weather/fetchWeather",
-  async () => {
+  async (query: string) => {
     try {
-      const apiKey = process.env.REACT_APP_OPENWEATHERMAP_API_KEY;
-      const response = await axios.get(
-        `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=pakistan&aqi=yes`
+      const apiKey = "b8bde6f5c8564f8c9eb111632231908";
+      const { data } = await axios.get(
+        `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${query}&aqi=yes`
       );
-      return response.data;
-    } catch (error) {
-      throw error;
+      return data;
+    } catch (error: any) {
+      return { status: false, ...error?.response?.data?.error };
     }
   }
 );
@@ -34,15 +34,22 @@ const weatherSlice = createSlice({
     builder
       .addCase(fetchWeather.pending, (state) => {
         state.loading = true;
+        state.weatherData = null;
         state.error = null;
       })
       .addCase(fetchWeather.fulfilled, (state, action) => {
         state.loading = false;
-        state.weatherData = action.payload;
+        const data = action.payload;
+        console.log("🚀 ~ file: weatherSlice.tsx:42 ~ .addCase ~ data:", data);
+
+        if (data?.status === false) {
+          state.error = data;
+        } else {
+          state.weatherData = action.payload;
+        }
       })
       .addCase(fetchWeather.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message;
       });
   },
 });
