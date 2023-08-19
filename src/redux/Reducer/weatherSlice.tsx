@@ -16,7 +16,7 @@ export const fetchWeather = createAsyncThunk(
         `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${query}&aqi=yes`
       );
       return data;
-    } catch (error: any) {
+    } catch (error) {
       return { status: false, ...error?.response?.data?.error };
     }
   }
@@ -40,7 +40,7 @@ const weatherSlice = createSlice({
       .addCase(fetchWeather.fulfilled, (state, action) => {
         state.loading = false;
         const data = action.payload;
-        console.log("🚀 ~ file: weatherSlice.tsx:42 ~ .addCase ~ data:", data);
+        // console.log("🚀 ~ file: weatherSlice.tsx:42 ~ .addCase ~ data:", data);
 
         if (data?.status === false) {
           state.error = data;

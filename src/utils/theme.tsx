@@ -1,6 +1,6 @@
 <link
+  href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100&family=Roboto:ital,wght@0,100;0,300;0,500;1,100;1,300&display=swap"
   rel="stylesheet"
-  href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700&display=swap"
 />;
 
 import { createTheme } from "@mui/material/styles";
@@ -27,7 +27,7 @@ export const theme = createTheme({
   },
 
   typography: {
-    fontFamily: "'Montserrat', sans-serif",
+    fontFamily: "'Roboto', sans-serif",
     htmlFontSize: 16,
     button: {
       textTransform: "none",

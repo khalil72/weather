@@ -1,5 +1,5 @@
-import { Box, TextField, Paper, Stack } from "@mui/material";
-import React, { useState } from "react";
+import { TextField, Paper, Grid } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import SearchIcon from "@mui/icons-material/Search";
@@ -11,7 +11,13 @@ import { fetchWeather } from "@/redux/Reducer/weatherSlice";
 const Search = () => {
   const classes = useStyles;
   const [SearchQuery, setQuery] = useState<string>("");
+
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchWeather("pakistan"));
+  }, []);
+
   const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("SearchQuery:", SearchQuery);
@@ -23,33 +29,29 @@ const Search = () => {
     }
   };
   return (
-    <Stack
-      direction="column"
-      alignItems="center"
-      justifyContent="center"
-      spacing={0}
-      pt={10}
-    >
-      <form onSubmit={handleSearch}>
-        <TextField
-          component={Paper}
-          fullWidth
-          placeholder="Search Weather"
-          value={SearchQuery}
-          onChange={(e) => setQuery(e.target.value)}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton type="submit">
-                  <SearchIcon />
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-          sx={classes.inputField}
-        />
-      </form>
-    </Stack>
+    <Grid container justifyContent="center">
+      <Grid item xs={12} md={6}>
+        <form onSubmit={handleSearch}>
+          <TextField
+            component={Paper}
+            fullWidth
+            placeholder="Search Weather"
+            value={SearchQuery}
+            onChange={(e) => setQuery(e.target.value)}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton type="submit">
+                    <SearchIcon />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+            sx={classes.inputField}
+          />
+        </form>
+      </Grid>
+    </Grid>
   );
 };
 

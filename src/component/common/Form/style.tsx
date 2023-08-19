@@ -1,6 +1,6 @@
 export const useStyles = {
   inputField: {
-    width: "500px",
+    width: "100%",
     borderRadius: "8px",
     border: "none",
     "& .MuiOutlinedInput-notchedOutline": {

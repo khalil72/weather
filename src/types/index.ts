@@ -1,10 +1,12 @@
-interface Condition {
+import { Humidity } from '@/component/weather/Humidity';
+import { ReactNode } from "react";
+export interface Condition {
   text: string; // Description of the weather condition (e.g., "Sunny")
   icon: string; // URL to the weather condition icon
   code: number; // Numeric code representing the weather condition
 }
 
-interface AirQuality {
+export interface AirQuality {
   co: number; // Carbon monoxide level
   no2: number; // Nitrogen dioxide level
   o3: number; // Ozone level
@@ -15,7 +17,7 @@ interface AirQuality {
   "gb-defra-index": number; // Air quality index according to UK DEFRA standards
 }
 
-interface CurrentWeather {
+export interface CurrentWeather {
   last_updated_epoch: number; // Unix timestamp of when the data was last updated
   last_updated: string; // Human-readable date and time when data was last updated
   temp_c: number; // Temperature in degrees Celsius
@@ -42,7 +44,7 @@ interface CurrentWeather {
   air_quality: AirQuality; // Air quality details (defined by AirQuality interface)
 }
 
-interface Location {
+export interface Location {
   name: string; // Name of the location (e.g., "Kharian")
   region: string; // Region or locality (e.g., "Punjab")
   country: string; // Country name (e.g., "Pakistan")
@@ -53,7 +55,31 @@ interface Location {
   localtime: string; // Local time in human-readable format
 }
 
-interface WeatherData {
+export interface WeatherData {
   location: Location; // Location details (defined by Location interface)
   current: CurrentWeather; // Current weather details (defined by CurrentWeather interface)
+}
+
+export interface BackgroundContainerProps {
+  children: ReactNode;
+}
+
+export interface temperature {
+  location: string | undefined;
+  condition: string | undefined;
+  icon: string | undefined;
+  temperatureC: number | undefined;
+}
+export interface HumidityProps {
+  humidity: number | undefined;
+  airPressure: number | undefined;
+  chanceOfRain: number | undefined;
+  windSpeed: number | undefined;
+}
+export interface HumidityLabel {
+  id: number;
+  label: string;
+  value: string;
+  icons: JSX.Element;
+  
 }

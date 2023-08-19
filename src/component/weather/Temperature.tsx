@@ -2,7 +2,7 @@ import { Box, Stack, Typography } from "@mui/material";
 import React, { FC } from "react";
 import CloudQueueOutlinedIcon from "@mui/icons-material/CloudQueueOutlined";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
-import { temperature } from "@/component/common/type";
+import { temperature } from "@/types";
 import Image from "next/image";
 
 const Temperature: FC<temperature> = ({
@@ -14,7 +14,13 @@ const Temperature: FC<temperature> = ({
   const iconUrl = icon && `https:${icon}`;
 
   return (
-    <Stack direction={"column"} spacing={0} mt={2} px={4} textAlign={"start"}>
+    <Stack
+      direction={"column"}
+      spacing={0}
+      mt={2}
+      px={{ xs: 1, sx: 4 }}
+      textAlign={"start"}
+    >
       <Box height={"66px"}>
         {icon ? (
           <Image
@@ -28,7 +34,7 @@ const Temperature: FC<temperature> = ({
         )}
       </Box>
 
-      <Typography variant={"h6"} fontWeight={600} fontFamily={"roboto"} pb={0}>
+      <Typography variant={"h6"} fontWeight={600} fontFamily={"roboto"} pt={3}>
         {condition}
       </Typography>
       <Typography

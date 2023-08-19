@@ -1,14 +1,16 @@
-import { Box, Container, Stack, Typography } from "@mui/material";
+import { Container, Stack, useMediaQuery } from "@mui/material";
 import React, { useEffect } from "react";
-import { useStyles } from "@/component/common/style";
+
 import BackgroundContainer from "@/component/common/BackgroundContainer";
 import Temperature from "@/component/weather/Temperature";
 import Humidity from "@/component/weather/Humidity";
 import Search from "@/component/common/Form/Search";
-import History from "@/component/weather/History";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { fetchWeather } from "@/redux/Reducer/weatherSlice";
+
+import { useAppSelector } from "@/redux/hooks";
+
 import { toast } from "react-toastify";
+import Loader from "@/component/common/loader";
+import MobileHumidity from "./Mobile";
 
 const Common = () => {
   const { weatherData, loading, error } = useAppSelector(
@@ -20,19 +22,23 @@ const Common = () => {
       toast.error(error?.message);
     }
   }, [error]);
+
+  const isMobileScreen = useMediaQuery((theme: any) =>
+    theme.breakpoints.down("sm")
+  );
+
   return (
     <BackgroundContainer>
-      <Container maxWidth="lg">
+      <Container maxWidth="lg" sx={{ pt: { xs: 2, md: 10 } }}>
         <Search />
         {loading ? (
-          <Typography>Loading</Typography>
+          <Loader />
         ) : (
           weatherData && (
             <Stack
-              direction={"row"}
+              direction={{ xs: "column", sm: "row" }}
               justifyContent={"space-between"}
               alignItems={"center"}
-              p={4}
             >
               <Temperature
                 location={weatherData?.location.name}
@@ -40,12 +46,22 @@ const Common = () => {
                 icon={weatherData.current.condition.icon}
                 temperatureC={weatherData.current.temp_c}
               />
-              <Humidity
-                humidity={weatherData.current.humidity}
-                airPressure={weatherData.current.pressure_mb}
-                chanceOfRain={weatherData.current.precip_mm}
-                windSpeed={weatherData.current.wind_kph}
-              />
+
+              {isMobileScreen ? (
+                <MobileHumidity
+                  humidity={weatherData.current.humidity}
+                  airPressure={weatherData.current.pressure_mb}
+                  chanceOfRain={weatherData.current.precip_mm}
+                  windSpeed={weatherData.current.wind_kph}
+                />
+              ) : (
+                <Humidity
+                  humidity={weatherData.current.humidity}
+                  airPressure={weatherData.current.pressure_mb}
+                  chanceOfRain={weatherData.current.precip_mm}
+                  windSpeed={weatherData.current.wind_kph}
+                />
+              )}
             </Stack>
           )
         )}

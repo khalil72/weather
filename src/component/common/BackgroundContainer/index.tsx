@@ -1,6 +1,6 @@
 import React from "react";
 import { FC } from "react";
-import { BackgroundContainerProps } from "@/component/common/type";
+import { BackgroundContainerProps } from "@/types";
 
 const BackgroundContainer: FC<BackgroundContainerProps> = ({ children }) => {
   return (
@@ -12,6 +12,7 @@ const BackgroundContainer: FC<BackgroundContainerProps> = ({ children }) => {
         backgroundPosition: "center",
         height: "100vh",
         color: "white",
+        width: "100%",
       }}
     >
       {children}
